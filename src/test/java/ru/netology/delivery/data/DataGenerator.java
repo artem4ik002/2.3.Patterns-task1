@@ -2,7 +2,7 @@ package ru.netology.delivery.data;
 
 import com.github.javafaker.Faker;
 import lombok.Value;
-import lombok.val;
+
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,28 +14,27 @@ public class DataGenerator {
     }
 
     public static String generateDate(int shift) {
-        LocalDate currentDate = LocalDate.now().plusDays(3);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String date = currentDate.format(formatter);
-        return date;
+        return LocalDate.now().plusDays(shift).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
     public static String generateCity(String locale) {
-        Faker faker = new Faker(new Locale("ru"));
-        String city = faker.address().city();
-        return city;
+        var sities = new String[]{"Москва","Санкт-Петербург","Новосибирск","Екатеринбург","Казань",
+                "Нижний Новгород","Саратов","Красноярск","Самара","Астрахань","Ростов-на-Дону","Ставрополь","Краснодар",
+                "Воронеж","Волгоград","Пермь"};
+        return sities[new Random().nextInt(sities.length)];
     }
 
     public static String generateName(String locale) {
-        Faker faker = new Faker(new Locale("ru"));
-        String name = faker.name().fullName();
-        return name;
+        // TODO: добавить логику для объявления переменной name и задания её значения, для генерации можно
+        // использовать Faker
+        Faker faker = new Faker(new Locale(locale));
+        return faker.name().fullName();
     }
 
     public static String generatePhone(String locale) {
-        Faker faker = new Faker(new Locale("ru"));
-        String phone = faker.phoneNumber().phoneNumber();
-        return phone;
+        // TODO: добавить логику для объявления переменной phone и задания её значения, для генерации можно
+        Faker faker = new Faker(new Locale(locale));
+        return faker.phoneNumber().phoneNumber();
     }
 
     public static class Registration {
@@ -43,13 +42,9 @@ public class DataGenerator {
         }
 
         public static UserInfo generateUser(String locale) {
-            Faker faker = new Faker(new Locale("ru"));
-            return new UserInfo(
-                    faker.address().city(),
-                    faker.name().fullName(),
-                    faker.phoneNumber().phoneNumber()
-            );
-
+            // TODO: добавить логику для создания пользователя user с использованием методов generateCity(locale),
+            // generateName(locale), generatePhone(locale)
+            return new UserInfo(generateCity(locale),generateName(locale),generatePhone(locale));
         }
     }
 
@@ -58,5 +53,6 @@ public class DataGenerator {
         String city;
         String name;
         String phone;
+
     }
 }
